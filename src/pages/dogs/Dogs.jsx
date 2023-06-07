@@ -1,15 +1,10 @@
-import { 
-  redirect, 
-  useLoaderData, 
-  useNavigate,
-  Link
-} from 'react-router-dom'
+import { redirect, useLoaderData, Link} from 'react-router-dom'
 import { useState, useContext } from 'react'
 import { findDogs, getDogs, getBreeds, getLocations } from '../../api/data'
-import { logout } from '../../api/auth'
 import { SelectedDogsContext } from '../../context/SelectedDogsContext'
 import DogCard from '../../components/dogcard/DogCard'
 import FilterBox from '../../components/filterbox/FilterBox'
+import dogsPageImage from '../../assets/catch_dogs_page.png'
 import '../../App.css'
 import './dogs.css'
 
@@ -57,13 +52,11 @@ export async function loader({ request }) {
 }
 
 export default function Dogs() {
-  const navigate = useNavigate()
   const data = useLoaderData()
-  const [logoutError, setLogoutError] = useState(null)
-  const { selectedDogs } = useContext(SelectedDogsContext)
-  const [selectedBreeds, setSelectedBreeds] = useState(data.selectedBreeds ? data.selectedBreeds : [])
+  const [selectedBreeds, setSelectedBreeds] = useState(data.selectedBreeds)
   const [sortBy, setSortBy] = useState(data.sortBy.split(':')[0] || "breed")
   const [sortOrder, setSortOrder] = useState(data.sortBy.split(':')[1] || "asc")
+  // const [zipFilter, setZipFilter] = useState('')
 
   function buildFilterQuery() {
     let filterQuery = "";
@@ -73,17 +66,6 @@ export default function Dogs() {
       }) 
     }
     return filterQuery + `sort=${sortBy}:${sortOrder}`;
-  }
-
-  async function handleLogout() {
-    const res = await logout();
-    if (res.status === 200) {
-      console.log("Logout successful");
-      navigate("/?message=Logout%20successful");
-    } else {
-      console.log("Logout failed", res.status)
-      setLogoutError("Logout failed");
-    }
   }
 
   //Turn dog data into DogCard components
@@ -107,40 +89,59 @@ export default function Dogs() {
 
   return (
     <div className="dogs-page">
-      <p className="selected-dogs">You have selected {selectedDogs.length} dogs</p>
-      <p className="selected-dogs">You have selected {selectedBreeds.length} breeds</p>
-      {console.log("selected breeds", selectedBreeds)}
-
-      <FilterBox 
-        options={data.breeds} 
-        selectedOptions={selectedBreeds}
-        setSelectedOptions={setSelectedBreeds}
-      />
-
-      <div className="sort-by">
-        <input type="radio" name="sort-by" value="breed" checked={sortBy === "breed"} onChange={() => setSortBy("breed")}/>
-        <label htmlFor="breed">Breed</label>
-        <input type="radio" name="sort-by" value="age" checked={sortBy === "age"} onChange={() => setSortBy("age")}/>
-        <label htmlFor="age">Age</label>
-      </div>
-      <Link to={`/dogs?size=10&${buildFilterQuery()}`}>Apply Filters</Link>
-
-      <div className="dog-cards-container">{dogCards}</div>
-      <div className="page-selection">
-        {data.prev && <Link to={`/dogs?size=10&${buildFilterQuery()}&page=${data.prev}`}>{"<-Back"}</Link>}
-        {data.next && <Link to={`/dogs?size=10&${buildFilterQuery()}&page=${data.next}`}>{"Next->"}</Link>}
-      </div>
-
-      <div className="bottom-option">
+      <div className="dogs-page-info">
+        <img className="dogs-page-image" src={dogsPageImage} alt="Dog" />
         <div>
-          <Link to="/selected">View Your Selected Dogs</Link>
-        </div>
-        <div className="logout-container">
-          {logoutError && <p>{logoutError}</p>}
+          <h1>Select your favorites!</h1>
           <div className="horizontal-flex">
-            <p className="logout-prompt">Done looking?</p><button className="logout-button" onClick={handleLogout}>Logout</button>
+            <p>Add dogs to your favorites, and when you&#39;re ready</p>
+            <Link to="/favorites" className="favorites-button">Find your Catch!</Link>
           </div>
         </div>
+      </div>
+
+      <div className="filters-container">
+        <div className="filter-box-container">
+          <p>Filter breeds:</p>
+          <FilterBox 
+            options={data.breeds} 
+            selectedOptions={selectedBreeds}
+            setSelectedOptions={setSelectedBreeds}
+          />
+        </div>
+
+        <div className="sorting">
+          <div className="sort-by">
+            <p>Sort by:</p>
+            <input type="radio" name="sort-by" value="breed" checked={sortBy === "breed"} onChange={() => setSortBy("breed")}/>
+            <label htmlFor="breed">Breed</label>
+            <input type="radio" name="sort-by" value="age" checked={sortBy === "age"} onChange={() => setSortBy("age")}/>
+            <label htmlFor="age">Age</label>
+            <input type="radio" name="sort-by" value="name" checked={sortBy === "name"} onChange={() => setSortBy("name")}/>
+            <label htmlFor="name">Name</label>
+          </div>
+          <div className="sort-order">
+            <p>Sort order:</p>
+            <input type="radio" name="sort-order" value="asc" checked={sortOrder === "asc"} onChange={() => setSortOrder("asc")}/>
+            <label htmlFor="asc">Ascending</label>
+            <input type="radio" name="sort-order" value="desc" checked={sortOrder === "desc"} onChange={() => setSortOrder("desc")}/>
+            <label htmlFor="desc">Descending</label>
+          </div>
+        </div>
+        <div>
+          {/* <div className="zip-filter">
+            <label>Filter zip code:</label>
+            <input type="text" name="zip" onChange={(e) =>  {setZipFilter(e.target.value)}} />
+          </div> */}
+          <Link to={`/dogs?size=10&${buildFilterQuery()}`}>Apply Filters</Link>
+        </div>
+      </div>
+
+      <div className="dog-cards-container">{dogCards}</div>
+
+      <div className="page-selection">
+        {data.prev && <Link to={`/dogs/${data.prev.slice(12)}`}>{"<-Previous Page"}</Link>}
+        {data.next && <Link to={`/dogs/${data.next.slice(12)}`}>{"Next Page ->"}</Link>}
       </div>
     </div>
   )

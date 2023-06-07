@@ -6,7 +6,7 @@ import {
 } from 'react-router-dom'
 import DefaultLayout from './layouts/default/DefaultLayout'
 import Home, { loader as homeLoader, action as homeAction } from './pages/home/Home'
-import Selected from './pages/selected/Selected'
+import Favorites from './pages/favorites/Favorites'
 import Dogs, { loader as dogsLoader } from './pages/dogs/Dogs'
 import './App.css'
 
@@ -25,8 +25,8 @@ function App() {
         loader={dogsLoader}
       />
       <Route
-        path="selected"
-        element={<Selected />}
+        path="favorites"
+        element={<Favorites />}
       />
     </Route> 
   ))

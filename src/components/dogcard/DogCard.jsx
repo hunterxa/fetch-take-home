@@ -5,16 +5,16 @@ import './dogcard.css'
 
 function DogCard({ img, name, age, breed, location, id }) {
   const { selectedDogs, setSelectedDogs } = useContext(SelectedDogsContext)
-  const [selected, setSelected] = useState(selectedDogs.includes(id))
+  const [selected, setSelected] = useState(selectedDogs.filter(dog => dog.id === id).length > 0)
 
   function handleAdd() {
-    setSelectedDogs(prevDogs => [...prevDogs, id])
+    setSelectedDogs(prevDogs => [...prevDogs, {img, name, age, breed, location, id}])
     setSelected(true)
     console.log(selectedDogs)
   }
 
   function handleRemove() {
-    setSelectedDogs(prevDogs => prevDogs.filter(dogId => dogId !== id))
+    setSelectedDogs(prevDogs => prevDogs.filter(dog => dog.id !== id))
     setSelected(false)
     console.log(selectedDogs)
   }
@@ -35,8 +35,8 @@ function DogCard({ img, name, age, breed, location, id }) {
         </div>
       </div>
       {selected
-        ? <button className="dog-card-button" onClick={handleRemove}>Remove</button>
-        : <button className="dog-card-button" onClick={handleAdd}>Add</button>
+        ? <button className="dog-card-button" onClick={handleRemove}>Remove from Favorites</button>
+        : <button className="dog-card-button" onClick={handleAdd}>Add to Favorites</button>
       }
     </div>
   )

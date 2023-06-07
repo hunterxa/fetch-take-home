@@ -41,7 +41,7 @@
 }
 
 .dog-card-bottom-info {
-  margin: 0 0 2rem 1rem;
+  margin: 0 0 3rem 1rem;
 }
 
 .dog-card-location, .dog-card-age, .dog-card-zip {
@@ -53,8 +53,8 @@
   position: absolute;
   bottom: 1rem;
   background-color: #928FBC;
-  height: 1.5rem;
-  width: 4rem;
+  height: 3rem;
+  width: 13rem;
   color: #F6F4F0;
   border-radius: 0.5rem;
   border:none;

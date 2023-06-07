@@ -1,0 +1,50 @@
+.selected-dogs-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  gap: 1rem;
+  padding: 0 2rem;
+}
+
+.favorites-page-info {
+  text-align: right;
+}
+
+.favorites-page-image {
+  max-width: 250px;
+  border-radius: 50%;
+  box-shadow: 0 0.2rem 0.2rem rgba(0, 0, 0, 0.25);
+  margin-left: 2rem;
+}
+
+.match-button-container {
+  display: flex;
+  justify-content: center;
+  margin: 1rem 0;
+}
+
+.match-button {
+  background-color: #928FBC;
+  color: #F6F4F0;
+  font-size: 2rem;
+  font-weight: 600;
+  border-radius: 1rem;
+  border: none;
+  height: 5rem;
+  width: 18rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 1rem;
+  text-decoration: none;
+  box-shadow: 0 0.2rem 0.2rem rgba(0, 0, 0, 0.25);
+}
+
+.match-button:hover {
+  cursor: pointer;
+  background-color: #A6B1CE;
+}
+
+.match-button:active {
+  box-shadow: none;
+  transform: translate(0.2rem, 0.2rem)
+}
