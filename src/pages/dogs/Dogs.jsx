@@ -33,20 +33,21 @@ export async function loader({ request }) {
       throw new Error("Error retrieving list of breeds")
     }
     const getBreedsData = await getBreedsRes.json()
-    const selectedBreeds = params.get("breeds") //get already selected breeds from the url
     //Get the locations of the dogs
     const getLocationsRes = await getLocations(getDogsData.map(dog => dog.zip_code))
     if (getLocationsRes.status !== 200) {
       throw new Error("Error retrieving list of locations")
     }
     const getLocationsData = await getLocationsRes.json()
+
     return { 
       dogs: getDogsData,
-      breeds: getBreedsData, 
-      selectedBreeds: selectedBreeds, 
+      breeds: getBreedsData,
       locations: getLocationsData,
       next: findDogsData.next, 
-      prev: findDogsData.prev 
+      prev: findDogsData.prev,
+      selectedBreeds: params.getAll('breeds'),
+      sortBy: params.get('sort')
     }
   } else {
     //If the request fails throw an error so that the error boundary is displayed
@@ -60,14 +61,18 @@ export default function Dogs() {
   const data = useLoaderData()
   const [logoutError, setLogoutError] = useState(null)
   const { selectedDogs } = useContext(SelectedDogsContext)
-  const [selectedBreeds, setSelectedBreeds] = useState(data.selectedBreeds ? [data.selectedBreeds] : [])
+  const [selectedBreeds, setSelectedBreeds] = useState(data.selectedBreeds ? data.selectedBreeds : [])
+  const [sortBy, setSortBy] = useState(data.sortBy.split(':')[0] || "breed")
+  const [sortOrder, setSortOrder] = useState(data.sortBy.split(':')[1] || "asc")
 
-  function buildBreedFilterQuery() {
-    let breedQuery = "";
-    selectedBreeds.forEach(breed => {
-      breedQuery += `breeds=${breed}&`
-    })
-    return breedQuery;
+  function buildFilterQuery() {
+    let filterQuery = "";
+    if (selectedBreeds.length > 0) {
+      selectedBreeds.forEach(breed => {
+        filterQuery += `breeds=${breed}&`
+      }) 
+    }
+    return filterQuery + `sort=${sortBy}:${sortOrder}`;
   }
 
   async function handleLogout() {
@@ -80,8 +85,6 @@ export default function Dogs() {
       setLogoutError("Logout failed");
     }
   }
-
-  console.log(data.locations)
 
   //Turn dog data into DogCard components
   let dogCards = null;
@@ -105,18 +108,27 @@ export default function Dogs() {
   return (
     <div className="dogs-page">
       <p className="selected-dogs">You have selected {selectedDogs.length} dogs</p>
+      <p className="selected-dogs">You have selected {selectedBreeds.length} breeds</p>
+      {console.log("selected breeds", selectedBreeds)}
 
       <FilterBox 
         options={data.breeds} 
         selectedOptions={selectedBreeds}
         setSelectedOptions={setSelectedBreeds}
       />
-      <Link to={`/dogs?size=10&${buildBreedFilterQuery()}`}>Apply Filters</Link>
+
+      <div className="sort-by">
+        <input type="radio" name="sort-by" value="breed" checked={sortBy === "breed"} onChange={() => setSortBy("breed")}/>
+        <label htmlFor="breed">Breed</label>
+        <input type="radio" name="sort-by" value="age" checked={sortBy === "age"} onChange={() => setSortBy("age")}/>
+        <label htmlFor="age">Age</label>
+      </div>
+      <Link to={`/dogs?size=10&${buildFilterQuery()}`}>Apply Filters</Link>
 
       <div className="dog-cards-container">{dogCards}</div>
       <div className="page-selection">
-        {data.prev && <Link to={`/dogs?size=10&${buildBreedFilterQuery()}&page=${data.prev}`}>{"<-Back"}</Link>}
-        {data.next && <Link to={`/dogs?size=10&${buildBreedFilterQuery()}&page=${data.next}`}>{"Next->"}</Link>}
+        {data.prev && <Link to={`/dogs?size=10&${buildFilterQuery()}&page=${data.prev}`}>{"<-Back"}</Link>}
+        {data.next && <Link to={`/dogs?size=10&${buildFilterQuery()}&page=${data.next}`}>{"Next->"}</Link>}
       </div>
 
       <div className="bottom-option">
