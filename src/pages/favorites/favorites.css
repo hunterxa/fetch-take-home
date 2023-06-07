@@ -6,6 +6,13 @@
 }
 
 .favorites-page-info {
+  margin: 2rem;
+  justify-content: right;
+  display: flex;
+  align-items: center;
+}
+
+.favorites-page-info-text {
   text-align: right;
 }
 
@@ -34,9 +41,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-left: 1rem;
   text-decoration: none;
   box-shadow: 0 0.2rem 0.2rem rgba(0, 0, 0, 0.25);
+  margin-bottom: 2rem;
 }
 
 .match-button:hover {
@@ -47,4 +54,8 @@
 .match-button:active {
   box-shadow: none;
   transform: translate(0.2rem, 0.2rem)
+}
+
+.no-dogs-selected {
+  text-align: center;
 }

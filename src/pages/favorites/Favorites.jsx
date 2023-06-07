@@ -28,17 +28,25 @@ export default function Favorites() {
 
   return (
     <div className="favorites-page">
-      <div className="horizontal-flex">
-        <div className="favorites-page-info">
+      <div className="favorites-page-info">
+        <div className="favorites-page-info-text">
           <h1>Almost there!</h1>
           <p>Remove any dogs you might have changed you&#39;re mind on, and then find your catch!</p>
         </div>
         <img src={favoritesImage} className="favorites-page-image" />
       </div>
-      <div className="match-button-container">
-        <button className="match-button">Find your catch!</button>
-      </div>
-      {dogCards && <div className="selected-dogs-container">{dogCards}</div>}
+
+      {/*If no dogs have been selected show message to user*/}
+      {selectedDogs.length === 0
+        ? <h2 className="no-dogs-selected">You haven&#39;t selected any dogs yet!</h2>
+        :
+        <>
+          <div className="match-button-container">
+            <button className="match-button">Find your catch!</button>
+          </div>
+          {dogCards && <div className="selected-dogs-container">{dogCards}</div>}
+        </>
+      }
     </div>
   )
 }
