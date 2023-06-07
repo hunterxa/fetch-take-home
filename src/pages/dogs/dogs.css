@@ -1,0 +1,20 @@
+.dog-cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  gap: 1rem;
+}
+
+.logout-button {
+  background-color: #928FBC;
+  height: 1.5rem;
+  width: 4rem;
+  color: #F6F4F0;
+  border: solid 0.1rem #928FBC;
+  border-radius: 0.5rem;
+  margin-left: 0.5rem;
+}
+
+.logout-button:hover {
+  cursor: pointer;
+  background-color: #A6B1CE;
+}

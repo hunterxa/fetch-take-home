@@ -5,6 +5,7 @@ header {
   background-color: #86477F;
   display: flex;
   align-items: center;
+  gap: 3rem;
 }
 
 .header-title {
@@ -18,4 +19,9 @@ header {
 
 .header-title:hover {
   cursor: pointer;
+}
+
+.header-link {
+  color: #F6F4F0;
+  
 }

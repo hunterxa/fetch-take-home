@@ -5,7 +5,7 @@ import {
   createRoutesFromElements
 } from 'react-router-dom'
 import DefaultLayout from './layouts/default/DefaultLayout'
-import Home, { action as homeAction } from './pages/home/Home'
+import Home, { loader as homeLoader, action as homeAction } from './pages/home/Home'
 import Dogs, { loader as dogsLoader } from './pages/dogs/Dogs'
 import './App.css'
 
@@ -16,6 +16,7 @@ function App() {
       <Route
         index
         element={<Home />}
+        loader={homeLoader}
         action={homeAction}
       />
       <Route

@@ -1,8 +1,19 @@
-import { Form, redirect, useActionData } from 'react-router-dom'
+import { 
+  Form, 
+  redirect, 
+  useActionData,
+  useLoaderData
+} from 'react-router-dom'
 import { login } from '../../api/auth'
 import catchHome from '../../assets/catch_home.png'
 import '../../App.css'
 import './home.css'
+
+export async function loader({ request }) {
+  const params = new URL(request.url).searchParams;
+  const message = params.get("message")
+  return { message }
+}
 
 export async function action({ request }) {
   // const redirectTo = new URL(request.url).searchParams.get("redirectTo")
@@ -27,6 +38,7 @@ export async function action({ request }) {
 }
 
 export default function Home() {
+  const data = useLoaderData();
   const errors = useActionData();
 
   return (
@@ -41,6 +53,7 @@ export default function Home() {
           <p>Login to find your Catch!</p>
         </div>
         <div className="login-container-body">
+            {data?.message && <h3 className="login-message">{data.message}</h3>}
             {errors?.message && <h3 className="login-error">{errors.message}</h3>}
             <Form
               method="POST"

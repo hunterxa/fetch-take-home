@@ -10,3 +10,7 @@ export async function login(name, email) {
   headers.append("Content-Type", "application/json")
   return await fetch(`${url}/auth/login`, {method: "POST", body: body, headers: headers, mode: 'cors', credentials: 'include'})
 }
+
+export async function logout() {
+  return await fetch(`${url}/auth/logout`, {method: "POST", mode: 'cors', credentials: 'include'})
+}
