@@ -49,10 +49,9 @@ export async function loader({ request }) {
 export default function Dogs() {
   const navigate = useNavigate()
   const data = useLoaderData()
-  const params = useParams();
   const [logoutError, setLogoutError] = useState(null)
   const { selectedDogs } = useContext(SelectedDogsContext)
-  const [selectedBreeds, setSelectedBreeds] = useState(data.selectedBreeds ? data.selectedBreeds : [])
+  const [selectedBreeds, setSelectedBreeds] = useState(data.selectedBreeds ? [data.selectedBreeds] : [])
 
   function buildBreedFilterQuery() {
     let breedQuery = "";
@@ -103,6 +102,10 @@ export default function Dogs() {
       <Link to={`/dogs?size=10&${buildBreedFilterQuery()}`}>Apply Filters</Link>
 
       <div className="dog-cards-container">{dogCards}</div>
+      <div className="page-selection">
+        {data.prev && <Link to={`/dogs?size=10&${buildBreedFilterQuery()}&page=${data.prev}`}>{"<-Back"}</Link>}
+        {data.next && <Link to={`/dogs?size=10&${buildBreedFilterQuery()}&page=${data.next}`}>{"Next->"}</Link>}
+      </div>
 
       <div className="logout-container">
         {logoutError && <p>{logoutError}</p>}
