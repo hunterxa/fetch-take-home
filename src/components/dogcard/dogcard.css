@@ -22,8 +22,13 @@
 }
 
 .dog-card-top-info {
-  display: flex;
-  gap: 0.5rem;
+  height: 4rem;
+  margin: 0.5rem 0 1rem 0;
+  text-align: center;
+}
+
+.dog-card-top-info p {
+  margin: 0;
 }
 
 .dog-card-name {
@@ -35,8 +40,13 @@
   font-style: italic;
 }
 
-.dog-card-location, .dog-card-age {
-  margin: 0;
+.dog-card-bottom-info {
+  margin: 0 0 2rem 1rem;
+}
+
+.dog-card-location, .dog-card-age, .dog-card-zip {
+  margin: 0.5rem 0 0 0;
+  text-align: center;
 }
 
 .dog-card-button {

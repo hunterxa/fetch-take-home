@@ -3,7 +3,7 @@ import { useContext, useState } from 'react'
 import { SelectedDogsContext } from '../../context/SelectedDogsContext'
 import './dogcard.css'
 
-function DogCard({ img, name, age, breed, zip, id }) {
+function DogCard({ img, name, age, breed, location, id }) {
   const { selectedDogs, setSelectedDogs } = useContext(SelectedDogsContext)
   const [selected, setSelected] = useState(selectedDogs.includes(id))
 
@@ -29,8 +29,9 @@ function DogCard({ img, name, age, breed, zip, id }) {
           <p className="dog-card-breed">{breed}</p>
         </div>
         <div className="dog-card-bottom-info">
-          <p className="dog-card-age"><span className="medium">Age:</span> {age} years old</p>
-          <p className="dog-card-zip"><span className="medium">Location:</span> {zip}</p>
+          {!location.city && <p className="dog-card-zip"><span className="medium">Location:</span> {location.zip_code}</p>}
+          {location.city && <p className="dog-card-location">{location.city}, {location.state} {location.zip_code}</p>}
+          <p className="dog-card-age">{age} years old</p>
         </div>
       </div>
       {selected
@@ -46,7 +47,7 @@ DogCard.propTypes = {
   name: PropTypes.string.isRequired,
   age: PropTypes.number.isRequired,
   breed: PropTypes.string.isRequired,
-  zip: PropTypes.number.isRequired,
+  location: PropTypes.object.isRequired,
   id: PropTypes.string.isRequired
 }
 

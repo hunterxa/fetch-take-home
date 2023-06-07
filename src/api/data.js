@@ -12,7 +12,7 @@ export async function findDogs(params){
     return await fetch(searchUrl, {credentials: "include", method: "GET"})
 }
 
-//Hits the API and gets the dog data for the dogs with the ids in the given array
+//Hits the API and gets the dog data for the dogs with the IDs in the given array
 export async function getDogs(ids){
     const body = JSON.stringify(ids)
     const headers = new Headers()
@@ -20,6 +20,15 @@ export async function getDogs(ids){
     return await fetch(`${url}/dogs`, {credentials: "include", method: "POST", headers, body})
 }
 
+//Hits the API and gets the list of breeds
 export async function getBreeds() {
     return await fetch(`${url}/dogs/breeds`, {credentials: "include", method: "GET"})
+}
+
+//Hits the API and gets the locations for the given zip codes
+export async function getLocations(zipCodes) {
+    const body = JSON.stringify(zipCodes)
+    const headers = new Headers()
+    headers.append("Content-Type", "application/json")
+    return await fetch(`${url}/locations`, {credentials: "include", method: "POST", headers, body})
 }

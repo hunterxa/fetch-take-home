@@ -2,11 +2,10 @@ import {
   redirect, 
   useLoaderData, 
   useNavigate,
-  Link,
-  useParams
+  Link
 } from 'react-router-dom'
 import { useState, useContext } from 'react'
-import { findDogs, getDogs, getBreeds } from '../../api/dogs'
+import { findDogs, getDogs, getBreeds, getLocations } from '../../api/data'
 import { logout } from '../../api/auth'
 import { SelectedDogsContext } from '../../context/SelectedDogsContext'
 import DogCard from '../../components/dogcard/DogCard'
@@ -25,17 +24,27 @@ export async function loader({ request }) {
 
   //If successful request, get dog data from returned ID array
   if (findDogsRes.status === 200) {
-    const findDogsData = await findDogsRes.json();
+    const findDogsData = await findDogsRes.json()
     const getDogsRes = await getDogs(findDogsData.resultIds)
-    const getDogsData = await getDogsRes.json();
+    const getDogsData = await getDogsRes.json()
     //Get breed names for filtering
-    const getBreedsRes = await getBreeds();
-    const getBreedsData = await getBreedsRes.json();
+    const getBreedsRes = await getBreeds()
+    if (getBreedsRes.status !== 200) {
+      throw new Error("Error retrieving list of breeds")
+    }
+    const getBreedsData = await getBreedsRes.json()
     const selectedBreeds = params.get("breeds") //get already selected breeds from the url
+    //Get the locations of the dogs
+    const getLocationsRes = await getLocations(getDogsData.map(dog => dog.zip_code))
+    if (getLocationsRes.status !== 200) {
+      throw new Error("Error retrieving list of locations")
+    }
+    const getLocationsData = await getLocationsRes.json()
     return { 
-      dogs: getDogsData, 
+      dogs: getDogsData,
       breeds: getBreedsData, 
       selectedBreeds: selectedBreeds, 
+      locations: getLocationsData,
       next: findDogsData.next, 
       prev: findDogsData.prev 
     }
@@ -65,12 +74,14 @@ export default function Dogs() {
     const res = await logout();
     if (res.status === 200) {
       console.log("Logout successful");
-      navigate("/");
+      navigate("/?message=Logout%20successful");
     } else {
       console.log("Logout failed", res.status)
       setLogoutError("Logout failed");
     }
   }
+
+  console.log(data.locations)
 
   //Turn dog data into DogCard components
   let dogCards = null;
@@ -83,7 +94,8 @@ export default function Dogs() {
           name={dog.name}
           age={dog.age}
           breed={dog.breed}
-          zip={dog.zip_code}
+          // Some zips do not have a location, in this case just return the zip code
+          location={data.locations.find(location => location && location.zip_code === dog.zip_code) || {zip_code: dog.zip_code}}
           id={dog.id}
         />
       )
@@ -107,10 +119,15 @@ export default function Dogs() {
         {data.next && <Link to={`/dogs?size=10&${buildBreedFilterQuery()}&page=${data.next}`}>{"Next->"}</Link>}
       </div>
 
-      <div className="logout-container">
-        {logoutError && <p>{logoutError}</p>}
-        <div className="horizontal-flex">
-          <p className="logout-prompt">Done looking?</p><button className="logout-button" onClick={handleLogout}>Logout</button>
+      <div className="bottom-option">
+        <div>
+          <Link to="/selected">View Your Selected Dogs</Link>
+        </div>
+        <div className="logout-container">
+          {logoutError && <p>{logoutError}</p>}
+          <div className="horizontal-flex">
+            <p className="logout-prompt">Done looking?</p><button className="logout-button" onClick={handleLogout}>Logout</button>
+          </div>
         </div>
       </div>
     </div>

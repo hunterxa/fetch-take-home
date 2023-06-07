@@ -6,6 +6,7 @@ import {
 } from 'react-router-dom'
 import DefaultLayout from './layouts/default/DefaultLayout'
 import Home, { loader as homeLoader, action as homeAction } from './pages/home/Home'
+import Selected from './pages/selected/Selected'
 import Dogs, { loader as dogsLoader } from './pages/dogs/Dogs'
 import './App.css'
 
@@ -22,6 +23,10 @@ function App() {
         path="dogs"
         element={<Dogs />}
         loader={dogsLoader}
+      />
+      <Route
+        path="selected"
+        element={<Selected />}
       />
     </Route> 
   ))
