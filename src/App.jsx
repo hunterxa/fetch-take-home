@@ -10,7 +10,6 @@ import Dogs, { loader as dogsLoader } from './pages/dogs/Dogs'
 import './App.css'
 
 function App() {
-
   const router = createBrowserRouter(createRoutesFromElements(
     <Route path="/" element={<DefaultLayout />}>
       <Route

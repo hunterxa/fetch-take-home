@@ -3,9 +3,10 @@ import {
   useLoaderData, 
   useNavigate,
 } from 'react-router-dom'
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import { findDogs, getDogs } from '../../api/dogs'
 import { logout } from '../../api/auth'
+import { SelectedDogsContext } from '../../context/SelectedDogsContext'
 import DogCard from '../../components/dogcard/DogCard'
 import '../../App.css'
 import './dogs.css'
@@ -36,6 +37,8 @@ export default function Dogs() {
   const [logoutError, setLogoutError] = useState(null)
   const data = useLoaderData()
 
+  const { selectedDogs } = useContext(SelectedDogsContext)
+
   async function handleLogout() {
     const res = await logout();
     if (res.status === 200) {
@@ -46,8 +49,6 @@ export default function Dogs() {
       setLogoutError("Logout failed");
     }
   }
-
-  console.log(data.dogs)
 
   //Turn dog data into DogCard components
   let dogCards = null;
@@ -61,6 +62,7 @@ export default function Dogs() {
           age={dog.age}
           breed={dog.breed}
           zip={dog.zip_code}
+          id={dog.id}
         />
       )
     })
@@ -68,6 +70,8 @@ export default function Dogs() {
 
   return (
     <div className="dogs-page">
+      {selectedDogs && <p className="selected-dogs">You have selected {selectedDogs.length} dogs</p>}
+
       {/* Render dog cards if they exist */}
       {dogCards && <div className="dog-cards-container">{dogCards}</div>}
 
