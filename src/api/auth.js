@@ -4,7 +4,7 @@ const url = "https://frontend-take-home-service.fetch.com"
 //Send Post request to /auth/login
 //Api takes in name and email as parameters
 //Return a promise with response
-export async function login(name: string, email: string) {
+export async function login(name, email) {
   const body = JSON.stringify({ name: name, email: email })
   const headers = new Headers()
   headers.append("Content-Type", "application/json")

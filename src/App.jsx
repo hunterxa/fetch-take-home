@@ -4,9 +4,9 @@ import {
   createBrowserRouter,
   createRoutesFromElements
 } from 'react-router-dom'
-import Home, { action as homeAction } from './pages/home/Home'
 import DefaultLayout from './layouts/default/DefaultLayout'
-
+import Home, { action as homeAction } from './pages/home/Home'
+import Dogs, { loader as dogsLoader } from './pages/dogs/Dogs'
 import './App.css'
 
 function App() {
@@ -17,6 +17,11 @@ function App() {
         index
         element={<Home />}
         action={homeAction}
+      />
+      <Route
+        path="dogs"
+        element={<Dogs />}
+        loader={dogsLoader}
       />
     </Route> 
   ))
