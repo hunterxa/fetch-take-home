@@ -27,7 +27,7 @@ export async function action({ request }) {
       const res = await login(name, email);
       if (res.status === 200) {
         console.log("Login successful");
-        return redirect("/dogs");
+        return redirect("/dogs?size=10");
       } else {
         console.log("Login failed", res.status)
         return new Error("Login failed");

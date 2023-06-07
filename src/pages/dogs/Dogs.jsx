@@ -2,18 +2,21 @@ import {
   redirect, 
   useLoaderData, 
   useNavigate,
+  Link,
+  useParams
 } from 'react-router-dom'
 import { useState, useContext } from 'react'
-import { findDogs, getDogs } from '../../api/dogs'
+import { findDogs, getDogs, getBreeds } from '../../api/dogs'
 import { logout } from '../../api/auth'
 import { SelectedDogsContext } from '../../context/SelectedDogsContext'
 import DogCard from '../../components/dogcard/DogCard'
+import FilterBox from '../../components/filterbox/FilterBox'
 import '../../App.css'
 import './dogs.css'
 
 export async function loader({ request }) {
-  // const params = new URL(request.url).searchParams;
-  const findDogsRes = await findDogs();
+  const params = new URL(request.url).searchParams;
+  const findDogsRes = await findDogs(params);
   //If request fails due to authorization, redirect to login page
   //Need to redirect right away as everything on this page requires authorization
   if (findDogsRes.status === 401) {
@@ -25,19 +28,39 @@ export async function loader({ request }) {
     const findDogsData = await findDogsRes.json();
     const getDogsRes = await getDogs(findDogsData.resultIds)
     const getDogsData = await getDogsRes.json();
-    return { dogs: getDogsData, next: findDogsData.next, prev: findDogsData.prev }
+    //Get breed names for filtering
+    const getBreedsRes = await getBreeds();
+    const getBreedsData = await getBreedsRes.json();
+    const selectedBreeds = params.get("breeds") //get already selected breeds from the url
+    return { 
+      dogs: getDogsData, 
+      breeds: getBreedsData, 
+      selectedBreeds: selectedBreeds, 
+      next: findDogsData.next, 
+      prev: findDogsData.prev 
+    }
   } else {
+    //If the request fails throw an error so that the error boundary is displayed
     console.log("Error finding dogs", findDogsRes.status)
-    return { error: "Error finding dogs" }
+    throw new Error("Error finding dogs")
   }
 }
 
 export default function Dogs() {
   const navigate = useNavigate()
-  const [logoutError, setLogoutError] = useState(null)
   const data = useLoaderData()
-
+  const params = useParams();
+  const [logoutError, setLogoutError] = useState(null)
   const { selectedDogs } = useContext(SelectedDogsContext)
+  const [selectedBreeds, setSelectedBreeds] = useState(data.selectedBreeds ? data.selectedBreeds : [])
+
+  function buildBreedFilterQuery() {
+    let breedQuery = "";
+    selectedBreeds.forEach(breed => {
+      breedQuery += `breeds=${breed}&`
+    })
+    return breedQuery;
+  }
 
   async function handleLogout() {
     const res = await logout();
@@ -70,11 +93,16 @@ export default function Dogs() {
 
   return (
     <div className="dogs-page">
-      {selectedDogs && <p className="selected-dogs">You have selected {selectedDogs.length} dogs</p>}
+      <p className="selected-dogs">You have selected {selectedDogs.length} dogs</p>
 
-      {/* Render dog cards if they exist */}
-      {dogCards && <div className="dog-cards-container">{dogCards}</div>}
+      <FilterBox 
+        options={data.breeds} 
+        selectedOptions={selectedBreeds}
+        setSelectedOptions={setSelectedBreeds}
+      />
+      <Link to={`/dogs?size=10&${buildBreedFilterQuery()}`}>Apply Filters</Link>
 
+      <div className="dog-cards-container">{dogCards}</div>
 
       <div className="logout-container">
         {logoutError && <p>{logoutError}</p>}

@@ -1,0 +1,6 @@
+.filter-box {
+  width: 15rem;
+  height: 15rem;
+  background-color: #F6F4F0;
+  overflow-y: scroll;
+}
