@@ -1,0 +1,21 @@
+header {
+  width: 100%;
+  text-align: left;
+  height: 5rem;
+  background-color: #86477F;
+  display: flex;
+  align-items: center;
+}
+
+.header-title {
+  margin: 0;
+  color: #F6F4F0;
+  margin-left: 2rem;
+  font-size: 3rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.header-title:hover {
+  cursor: pointer;
+}
