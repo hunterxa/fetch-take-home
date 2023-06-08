@@ -10,13 +10,11 @@ function DogCard({ img, name, age, breed, location, id }) {
   function handleAdd() {
     setSelectedDogs(prevDogs => [...prevDogs, {img, name, age, breed, location, id}])
     setSelected(true)
-    console.log(selectedDogs)
   }
 
   function handleRemove() {
     setSelectedDogs(prevDogs => prevDogs.filter(dog => dog.id !== id))
     setSelected(false)
-    console.log(selectedDogs)
   }
 
   return (
