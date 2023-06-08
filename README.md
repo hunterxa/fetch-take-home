@@ -16,6 +16,7 @@ On the "Favorites" page, the user can remove any dogs that they may have decided
 not want to adopt and then proceed to find a match. When the user finds a match, the site
 takes all of their favorited dogs and then displays to them the one they match with for
 adoption.  
+### Technology  
 The project was built mainly in React and CSS with React Router for routing between pages.
 
 ## User flow
