@@ -36,6 +36,8 @@ export default function Match() {
       <div className="go-again-container">
         <p className="go-again-text">Want another catch?</p>
         <Link to="/dogs?size=10&sort=breed:asc" className="go-again-link">Find another!</Link>
+        <p className="go-again-text">or done looking?</p>
+        <Link to="/logout" className="go-again-link">Logout</Link>
       </div>
     </div>
   )

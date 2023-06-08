@@ -15,7 +15,8 @@ The user can add dogs to their list of favorites that they can see on the "Favor
 On the "Favorites" page, the user can remove any dogs that they may have decided they would
 not want to adopt and then proceed to find a match. When the user finds a match, the site
 takes all of their favorited dogs and then displays to them the one they match with for
-adoption.
+adoption.  
+The project was built mainly in React and CSS with React Router for routing between pages.
 
 ## User flow
 When the user loads the site, they should be greeted with a home/login page. The user should
@@ -29,7 +30,7 @@ in the center of the screen to have their match generated for them. The user wil
 taken to a page to see the dog that they matched with for adoption.
 
 ## Building and running locally
-To run or build the project first clone the repository:  
+To run or build the project, first clone the repository:  
 `git clone https://github.com/hunterxa/fetch-take-home.git`  
 
 Then run `npm install` to install the dependencies  

@@ -1,0 +1,25 @@
+.about-page {
+  margin-left: 3rem;
+  display: flex;
+  align-items: center;
+}
+.about-title {
+  font-size: 4rem;
+  color: #4C65A1;
+}
+
+.about-text {
+  max-width: 600px;
+}
+
+.about-link {
+  color: #A6B1CE;
+  font-weight: 600;
+}
+
+.about-image {
+  border-radius: 50%;
+  max-width: 260px;
+  box-shadow: 0 0.2rem 0.2rem rgba(0, 0, 0, 0.2);
+  margin-left: 2rem;
+}

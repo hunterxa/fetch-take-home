@@ -10,6 +10,7 @@ import Favorites from './pages/favorites/Favorites'
 import Dogs, { loader as dogsLoader } from './pages/dogs/Dogs'
 import Match, { loader as matchLoader } from './pages/match/Match'
 import Logout, { loader as logoutLoader } from './pages/logout/Logout'
+import About from './pages/about/About'
 import Error from './components/error/Error'
 import './App.css'
 
@@ -21,6 +22,11 @@ function App() {
         element={<Home />}
         loader={homeLoader}
         action={homeAction}
+        errorElement ={<Error />}
+      />
+      <Route
+        path="about"
+        element={<About />}
         errorElement ={<Error />}
       />
       <Route
