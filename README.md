@@ -1,5 +1,5 @@
 # Fetch Take Home Project
-[Try it out!](fetch.tokyrios.com)
+[Try it out!](https://fetch.tokyrios.com)
 ![The Catch homepage](./images/homepage.png)
 ___
 ## About the project
