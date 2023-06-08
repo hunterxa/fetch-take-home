@@ -1,6 +1,8 @@
 import { useContext } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { SelectedDogsContext } from '../../context/SelectedDogsContext'
 import DogCard from '../../components/dogcard/DogCard'
+import { findMatch } from '../../api/data'
 import favoritesImage from '../../assets/catch_favorites.png'
 import './favorites.css'
 import '../../App.css'
@@ -10,7 +12,24 @@ export async function loader() {
 }
 
 export default function Favorites() {
-  const { selectedDogs } = useContext(SelectedDogsContext)
+  const { selectedDogs, setSelectedDogs } = useContext(SelectedDogsContext)
+  const navigate = useNavigate()
+
+  async function handleMatch() {
+    const ids = selectedDogs.map(dog => dog.id)
+    findMatch(ids).then(res => {
+        if (res.status === 401) {
+          throw navigate('/?message=Please%20login%20to%20view%20that%20page')
+        } else if (res.status !== 200) {
+          throw new Error("Error finding match")
+        }
+        res.json().then(data => {
+          setSelectedDogs([])
+          navigate(`/match/${data.match}`)
+        })
+    })
+
+  }
 
   const dogCards = selectedDogs.map(dog => {
       return (
@@ -42,7 +61,7 @@ export default function Favorites() {
         :
         <>
           <div className="match-button-container">
-            <button className="match-button">Find your catch!</button>
+            <button className="match-button" onClick={handleMatch}>Find your catch!</button>
           </div>
           {dogCards && <div className="selected-dogs-container">{dogCards}</div>}
         </>

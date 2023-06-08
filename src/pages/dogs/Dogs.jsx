@@ -1,7 +1,6 @@
 import { redirect, useLoaderData, Link} from 'react-router-dom'
-import { useState, useContext } from 'react'
+import { useState } from 'react'
 import { findDogs, getDogs, getBreeds, getLocations } from '../../api/data'
-import { SelectedDogsContext } from '../../context/SelectedDogsContext'
 import DogCard from '../../components/dogcard/DogCard'
 import FilterBox from '../../components/filterbox/FilterBox'
 import dogsPageImage from '../../assets/catch_dogs_page.png'
@@ -56,7 +55,6 @@ export default function Dogs() {
   const [selectedBreeds, setSelectedBreeds] = useState(data.selectedBreeds)
   const [sortBy, setSortBy] = useState(data.sortBy.split(':')[0] || "breed")
   const [sortOrder, setSortOrder] = useState(data.sortBy.split(':')[1] || "asc")
-  // const [zipFilter, setZipFilter] = useState('')
 
   function buildFilterQuery() {
     let filterQuery = "";
@@ -128,13 +126,7 @@ export default function Dogs() {
             <label htmlFor="desc">Descending</label>
           </div>
         </div>
-        <div>
-          {/* <div className="zip-filter">
-            <label>Filter zip code:</label>
-            <input type="text" name="zip" onChange={(e) =>  {setZipFilter(e.target.value)}} />
-          </div> */}
-          <Link to={`/dogs?size=10&${buildFilterQuery()}`}>Apply Filters</Link>
-        </div>
+        <Link to={`/dogs?size=10&${buildFilterQuery()}`}>Apply Filters</Link>
       </div>
 
       <div className="dog-cards-container">{dogCards}</div>

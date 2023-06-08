@@ -1,0 +1,48 @@
+.match-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+.match-page h1, p {
+  margin: 0;
+}
+
+.match-info {
+  color: #A6B1CE;
+  font-weight: 600;
+}
+
+.match-image {
+  max-width: 400px;
+  max-height: 400px;
+  border-radius: 3rem;
+  box-shadow: 0 0.2rem 0.2rem rgba(0, 0, 0, 0.25);
+}
+
+.match-title {
+  font-size: 3rem;
+}
+
+.match-name {
+  font-size: 2.5rem;
+  color: #4C65A1;
+}
+
+.go-again-container {
+  margin-top: 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.go-again-text {
+  font-size: 1.25rem;
+  color: #86477F;
+}
+
+.go-again-link {
+  font-size: 1.25rem;
+  color: #86477F;
+}

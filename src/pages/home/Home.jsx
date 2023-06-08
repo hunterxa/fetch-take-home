@@ -16,7 +16,6 @@ export async function loader({ request }) {
 }
 
 export async function action({ request }) {
-  // const redirectTo = new URL(request.url).searchParams.get("redirectTo")
   const formData = await request.formData()
   const name = formData.get('name')
   const email = formData.get('email')

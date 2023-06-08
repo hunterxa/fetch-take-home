@@ -32,3 +32,10 @@ export async function getLocations(zipCodes) {
     headers.append("Content-Type", "application/json")
     return await fetch(`${url}/locations`, {credentials: "include", method: "POST", headers, body})
 }
+
+export async function findMatch(ids) {
+    const body = JSON.stringify(ids)
+    const headers = new Headers()
+    headers.append("Content-Type", "application/json")
+    return await fetch(`${url}/dogs/match`, {credentials: "include", method: "POST", headers, body})
+}

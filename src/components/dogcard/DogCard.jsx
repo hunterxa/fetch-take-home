@@ -31,7 +31,7 @@ function DogCard({ img, name, age, breed, location, id }) {
         <div className="dog-card-bottom-info">
           {!location.city && <p className="dog-card-zip"><span className="medium">Location:</span> {location.zip_code}</p>}
           {location.city && <p className="dog-card-location">{location.city}, {location.state} {location.zip_code}</p>}
-          <p className="dog-card-age">{age} years old</p>
+          <p className="dog-card-age">{age < 1 ? "less than a year old" : `${age} years old`}</p>
         </div>
       </div>
       {selected

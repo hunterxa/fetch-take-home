@@ -8,6 +8,7 @@ import DefaultLayout from './layouts/default/DefaultLayout'
 import Home, { loader as homeLoader, action as homeAction } from './pages/home/Home'
 import Favorites from './pages/favorites/Favorites'
 import Dogs, { loader as dogsLoader } from './pages/dogs/Dogs'
+import Match, { loader as matchLoader } from './pages/match/Match'
 import './App.css'
 
 function App() {
@@ -27,6 +28,11 @@ function App() {
       <Route
         path="favorites"
         element={<Favorites />}
+      />
+      <Route
+        path="match/:matchId"
+        element={<Match />}
+        loader={matchLoader}
       />
     </Route> 
   ))
