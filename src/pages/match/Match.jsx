@@ -3,7 +3,6 @@ import { getDogs } from '../../api/data'
 import './match.css'
 
 export async function loader({ params }) {
-  console.log('params matchId', params.matchId)
   if (!params.matchId) {
     return {message: "You don't have a match yet! Go find your catch!"}
   }

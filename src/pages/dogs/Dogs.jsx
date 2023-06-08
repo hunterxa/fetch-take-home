@@ -135,6 +135,11 @@ export default function Dogs() {
         {data.prev && <Link to={`/dogs/${data.prev.slice(12)}`}>{"<-Previous Page"}</Link>}
         {data.next && <Link to={`/dogs/${data.next.slice(12)}`}>{"Next Page ->"}</Link>}
       </div>
+
+      <div className="log-out">
+        <p>Done looking?</p>
+        <Link to="/logout">Logout</Link>
+      </div>
     </div>
   )
 }

@@ -1,6 +1,6 @@
 import { 
   Form, 
-  redirect, 
+  redirect,
   useActionData,
   useLoaderData
 } from 'react-router-dom'
@@ -23,22 +23,21 @@ export async function action({ request }) {
 
   //If login fails or input is bad, return an error to be displayed to the user
   if (name && email) {
-      const res = await login(name, email);
+      const res = await login(name, email)
       if (res.status === 200) {
-        console.log("Login successful");
-        return redirect("/dogs?size=10&sort=breed:asc");
+        return redirect("/dogs?size=10&sort=breed:asc")
       } else {
         console.log("Login failed", res.status)
         return new Error("Login failed");
       }
   } else {
-    return new Error("Please enter both a name and email");
+    return new Error("Please enter both a name and email")
   }
 }
 
 export default function Home() {
-  const data = useLoaderData();
-  const errors = useActionData();
+  const data = useLoaderData()
+  const actionData = useActionData()
 
   return (
     <div className="home-page">
@@ -53,7 +52,7 @@ export default function Home() {
         </div>
         <div className="login-container-body">
             {data?.message && <h3 className="login-message">{data.message}</h3>}
-            {errors?.message && <h3 className="login-error">{errors.message}</h3>}
+            {actionData?.message && <h3 className="login-error">{actionData.message}</h3>}
             <Form
               method="POST"
               className="login-form"

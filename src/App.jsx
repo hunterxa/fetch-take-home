@@ -9,6 +9,8 @@ import Home, { loader as homeLoader, action as homeAction } from './pages/home/H
 import Favorites from './pages/favorites/Favorites'
 import Dogs, { loader as dogsLoader } from './pages/dogs/Dogs'
 import Match, { loader as matchLoader } from './pages/match/Match'
+import Logout, { loader as logoutLoader } from './pages/logout/Logout'
+import Error from './components/error/Error'
 import './App.css'
 
 function App() {
@@ -19,21 +21,31 @@ function App() {
         element={<Home />}
         loader={homeLoader}
         action={homeAction}
+        errorElement ={<Error />}
       />
       <Route
         path="dogs"
         element={<Dogs />}
         loader={dogsLoader}
+        errorElement ={<Error />}
       />
       <Route
         path="favorites"
         element={<Favorites />}
+        errorElement ={<Error />}
       />
       <Route
         path="match/:matchId"
         element={<Match />}
         loader={matchLoader}
+        errorElement={<Error />}
       />
+      <Route
+        path="logout"
+        element={<Logout />}
+        loader={logoutLoader}
+        errorElement={<Error />}
+        />
     </Route> 
   ))
 
