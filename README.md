@@ -1,6 +1,6 @@
 # Fetch Take Home Project
 [Try it out!](fetch.tokyrios.com)
-![The homepage of Catch](./images/homepage.png)
+<img src="./images/homepage.png" width="400" alt="The Catch homepage">
 ___
 ## About the project
 For this project, I built Catch! Catch is a website to pair prospective dog owners with
@@ -16,3 +16,4 @@ On the "Favorites" page, the user can remove any dogs that they may have decided
 not want to adopt and then proceed to find a match. When the user finds a match, the site
 takes all of their favorited dogs and then displays to them the one they match with for
 adoption.
+
