@@ -1,5 +1,6 @@
 # Fetch Take Home Project
-fetch.tokyrios.com
+[Try it out!](fetch.tokyrios.com)
+![The homepage of Catch](./images/homepage.png)
 ___
 ## About the project
 For this project, I built Catch! Catch is a website to pair prospective dog owners with
