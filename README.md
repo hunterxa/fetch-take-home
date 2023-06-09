@@ -18,6 +18,7 @@ takes all of their favorited dogs and then displays to them the one they match w
 adoption.  
 ### Technology  
 The project was built mainly in React and CSS with React Router for routing between pages.
+All data is pulled from the fetch-take-home API.
 
 ## User flow
 When the user loads the site, they should be greeted with a home/login page. The user should
